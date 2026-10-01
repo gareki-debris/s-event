@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ソニック関連イベント一覧</title>
+<meta name="description" content="2026年下半期のソニック関連イベント・コラボ企画をまとめた一覧です。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f1f1f1;
+    --surface: #ffffff;
+    --surface-2: #ececee;
+    --text: #141a26;
+    --text-sub: #5b6578;
+    --border: #e0e0e3;
+    --accent: #096cb8;
+    --accent-soft: #e3eef8;
+    --accent-text: #ffffff;
+    --hero: #096cb8;
+    --greet: #d6336c;
+    --greet-soft: #fde7ef;
+    --shadow: 0 1px 2px rgba(20, 30, 60, .06), 0 4px 16px rgba(20, 30, 60, .06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e121a;
+      --surface: #171c27;
+      --surface-2: #202737;
+      --text: #eef1f7;
+      --text-sub: #9aa4b8;
+      --border: #2a3244;
+      --accent: #5fa9e3;
+      --accent-soft: #14283a;
+      --accent-text: #0e121a;
+      --hero: #0a4f86;
+      --greet: #ff7aa8;
+      --greet-soft: #3a1b29;
+                  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e121a;
+    --surface: #171c27;
+    --surface-2: #202737;
+    --text: #eef1f7;
+    --text-sub: #9aa4b8;
+    --border: #2a3244;
+    --accent: #5fa9e3;
+    --accent-soft: #14283a;
+    --accent-text: #0e121a;
+    --hero: #0a4f86;
+    --greet: #ff7aa8;
+    --greet-soft: #3a1b29;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+
+  /* ヒーロー */
+  .hero {
+    background: var(--hero);
+    color: #fff;
+    padding: 28px 0 24px;
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    background: rgba(255, 255, 255, .18);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+  .hero h1 {
+    margin: 10px 0 6px;
+    font-size: clamp(24px, 6.4vw, 34px);
+    font-weight: 900;
+    line-height: 1.3;
+  }
+  .hero p { margin: 0; font-size: 13px; opacity: .88; }
+
+  /* フィルター */
+  .filters {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding-top: 12px;
+  }
+  .filter-panel {
+    background: var(--surface);
+    border-radius: 16px 16px 0 0;
+  }
+  .chips {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 4px 16px 12px;
+    margin: 0 -16px;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 16px;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none;
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    scroll-snap-align: start;
+    min-height: 36px;
+  }
+  .chip[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-text);
+  }
+  .chip.greet-chip { color: var(--greet); border-color: var(--greet); }
+  .chip.greet-chip[aria-pressed="true"] { background: var(--greet); color: #fff; }
+  .result {
+    font-size: 12px;
+    color: var(--text-sub);
+    padding: 0 0 10px;
+  }
+
+  /* リスト */
+  main { padding: 16px 0 40px; }
+  .month {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--text-sub);
+    letter-spacing: .06em;
+    margin: 22px 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .month::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+  .month:first-child { margin-top: 4px; }
+
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+    overflow: hidden;
+    border: 1px solid transparent;
+  }
+  .card.is-greet { border-color: color-mix(in srgb, var(--greet) 35%, transparent); }
+  .card-main {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 14px;
+    padding: 16px;
+  }
+  .date {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 12px;
+    text-align: center;
+    padding: 8px 4px;
+    align-self: start;
+  }
+  .date .m { display: block; font-size: 11px; font-weight: 700; }
+  .date .d { display: block; font-size: 24px; font-weight: 900; line-height: 1.1; }
+  .date .w { display: block; font-size: 11px; font-weight: 700; }
+  .date .from { display: block; font-size: 10px; margin-top: 2px; opacity: .8; }
+  .card.is-greet .date { background: var(--greet-soft); color: var(--greet); }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 2px 8px;
+    line-height: 1.6;
+  }
+  .tag-greet { background: var(--greet); color: #fff; }
+
+  .title {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+  .title a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .title .nw { white-space: nowrap; }
+  .title a:hover, .title a:active { text-decoration-color: var(--accent); }
+  .title .ext {
+    display: inline-block;
+    width: 17px; height: 17px;
+    margin-left: 4px;
+    vertical-align: -2px;
+    fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .meta {
+    display: grid;
+    gap: 3px;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+  .meta div { display: grid; grid-template-columns: 16px 1fr; gap: 6px; align-items: start; }
+  .meta svg { width: 14px; height: 14px; margin-top: 4px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .maps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-radius: 8px;
+    padding: 6px 10px;
+    text-decoration: none;
+    min-height: 32px;
+  }
+  .meta .map-link svg { margin-top: 0; flex: none; }
+  .greet-note {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--greet);
+    background: var(--greet-soft);
+    border-radius: 10px;
+    padding: 8px 10px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag {
+    font-size: 11px;
+    color: var(--text-sub);
+    background: var(--surface-2);
+    border-radius: 999px;
+    padding: 2px 9px;
+  }
+
+  details { border-top: 1px solid var(--border); }
+  summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "";
+    width: 8px; height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform .2s;
+    margin-right: 4px;
+  }
+  details[open] summary::after { transform: rotate(-135deg); }
+  .detail { padding: 0 16px 16px; font-size: 14px; }
+  .detail h3 {
+    font-size: 12px;
+    color: var(--text-sub);
+    margin: 4px 0 6px;
+    letter-spacing: .04em;
+  }
+  .detail p { margin: 0 0 14px; }
+  .detail ul { margin: 0 0 8px; padding-left: 1.2em; }
+  .detail li { margin-bottom: 4px; }
+  .detail .note { font-size: 12px; color: var(--text-sub); margin: 0 0 4px; }
+  .links { display: flex; margin-top: 14px; }
+  .btn {
+    flex: 1 1 140px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 11px 12px;
+    background: var(--accent);
+    color: var(--accent-text);
+  }
+  .btn.sub { background: var(--surface-2); color: var(--text); }
+
+  .empty {
+    text-align: center;
+    color: var(--text-sub);
+    padding: 40px 0;
+    font-size: 14px;
+  }
+  footer {
+    font-size: 12px;
+    color: var(--text-sub);
+    padding: 0 0 40px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="hero-label">2026年下半期</span>
+    <h1>ソニック関連<br>イベント一覧</h1>
+    <p>コラボ・展示・グッズ・グリーティング情報をまとめました</p>
+  </div>
+</header>
+
+<div class="filters">
+  <div class="wrap">
+    <div class="chips" id="chips" role="toolbar" aria-label="絞り込み"></div>
+    <div class="result" id="result" aria-live="polite"></div>
+  </div>
+</div>
+
+<main class="wrap" id="list"></main>
+
+<footer class="wrap">
+  掲載情報は2026年10月1日時点のものです。最新情報は各公式サイトでご確認ください。
+</footer>
+
+<script>
+const EVENTS = [
+  {
+    name: "ソニック・ザ・ヘッジホッグ × ROUND1 コラボキャンペーン",
+    url: "https://www.round1.co.jp/collaboration/sonic/index.html",
+    sub: "https://sonic.sega.jp/SonicChannel/topics/event/20260703_009335/",
+    period: "2026年7月10日（金）～10月12日（月・祝）",
+    start: "2026-07-10", end: "2026-10-12",
+    place: "全国のROUND1対象店舗（企画により対象店舗が異なる）",
+    area: "全国", cats: ["フード", "ノベルティ"],
+    summary: "全国のROUND1対象店舗で、コラボメニューや限定ノベルティ、クレーンゲーム景品、ボウリング演出などを展開。町田店ではコラボルームも実施。",
+    detail: "・コラボメニュー注文：期間別限定ノベルティ\n・コラボパック利用：B4ビジュアルマット\n・対象クレーンゲームに500円投入：A5クリアファイル\n・ボウリング2ゲームで条件達成：A5クリアファイル\n・町田店限定：コラボルーム\n・その他：ボウリング演出、Rism限定フレーム、公式Xキャンペーン"
+  },
+  {
+    name: "しまむらパーク「ソニック＆シャドウ」トレーナー・雑貨販売",
+    url: "https://sonic.sega.jp/SonicChannel/topics/goods/20260930_009403/",
+    period: "2026年9月30日（水）15:00～（なくなり次第終了）",
+    start: "2026-09-30", end: null, endLabel: "なくなり次第終了",
+    place: "しまむらパーク（オンラインストア）",
+    area: "オンライン", cats: ["グッズ"],
+    summary: "ソニック＆シャドウをデザインしたトレーナーと雑貨を、しまむらのオンラインストアで販売。",
+    detail: "・トレーナー：1,990円（税抜）／M～4L\n・ショルダーバッグ：1,990円（税抜）\n・キーホルダー：990円（税抜）\n・コインケース：990円（税抜）\n※なくなり次第終了"
+  },
+  {
+    name: "『SONIC & FRIENDS』3周年 × カナヘイの小動物 POP UP STORE",
+    url: "https://www.popap.biz/popup-list/sega-1002",
+    sub: "https://www.sega.jp/topics/detail/260817_2/",
+    period: "2026年10月2日（金）～10月12日（月・祝）",
+    start: "2026-10-02", end: "2026-10-12",
+    place: "渋谷モディ 2F イベントスペース（東京都渋谷区）",
+    maps: [{ q: "渋谷モディ 東京都渋谷区神南1-21-3" }],
+    area: "東京", cats: ["ポップアップ", "グッズ"],
+    summary: "『SONIC & FRIENDS』3周年と「カナヘイの小動物」のコラボPOP UP STORE。記念イラストを使用した商品や購入特典を展開。",
+    detail: "・記念イラストを使用したコラボ商品\n・SEGA STORE TOKYOとの連動購入特典\n・配布条件、絵柄、限定商品の詳細は後日発表"
+  },
+  {
+    name: "SEGA STORE OSAKA オープン記念企画",
+    url: "https://www.sega.jp/segastore/osaka/",
+    sub: "https://www.sega.co.jp/release/260914_1.html",
+    period: "2026年10月2日（金）オープン（常設）",
+    start: "2026-10-02", end: null, endLabel: "常設",
+    place: "心斎橋PARCO 6F（大阪市中央区）",
+    maps: [{ q: "心斎橋PARCO 大阪市中央区心斎橋筋1-8-3" }],
+    area: "大阪", cats: ["ショップ", "グッズ"],
+    greeting: "10月2日（金）・3日（土）",
+    summary: "セガ／アトラスのキャラクターグッズを扱う公式ストアが大阪にオープン。ソニックの限定商品や購入特典も用意。",
+    detail: "・ソニックグリーティング：10月2日（金）、3日（土）\n・3,300円以上購入：キラキラステッカー\n・5,500円以上購入：オリジナルショッパー\n・限定グッズ：ソニック・ザ・ヘッジホッグ × 河村康輔 SEGA STORE限定トイ（モノクロ）3,960円（税込）\n・限定グッズ：SEGA STORE OSAKA 限定ショッピングバッグ 1,100円（税込）\n・BE@RBRICK SUPER SONIC CHROME Ver. 100% & 400%：25,080円（税込）\n※購入特典はなくなり次第終了"
+  },
+  {
+    name: "サンロッカーズ渋谷 × ソニック 応援アンバサダー企画",
+    url: "https://www.sunrockers.jp/news/detail/id=23124",
+    period: "2026-27シーズン（ソニック来場：10月3日・4日）",
+    start: "2026-10-03", end: null, endLabel: "シーズン中",
+    place: "TOYOTA ARENA TOKYOほか、ホームゲーム会場・SNS",
+    maps: [{ q: "TOYOTA ARENA TOKYO 東京都江東区青海" }],
+    area: "東京", cats: ["スポーツ", "グッズ"],
+    greeting: "10月3日（土）・4日（日）ソニック来場（時間・参加方法は未発表）",
+    summary: "ソニックがサンロッカーズ渋谷の応援アンバサダーに就任。会場演出、コラボグッズ、SNS企画などをシーズンを通して展開。",
+    detail: "・ソニック来場：10月3日（土）、4日（日）の秋田戦\n・アリーナビジョン演出\n・コラボグッズ、SNS企画\n※グリーティング時間・参加方法は未発表"
+  },
+  {
+    name: "ソニック35周年記念 東京メトロオリジナル24時間券",
+    url: "https://www.sega.jp/topics/detail/260930_3/",
+    period: "2026年10月5日（月）～11月30日（月）（なくなり次第終了）",
+    start: "2026-10-05", end: "2026-11-30",
+    place: "東京メトロ旅客案内所、一部アニメイト、地下鉄博物館、原宿ツーリストインフォメーションセンター、オンライン",
+    area: "東京", cats: ["交通", "グッズ"],
+    summary: "ソニック35周年限定デザインの東京メトロ24時間券を、専用台紙付きで5,000セット販売。",
+    detail: "・価格：700円（大人用）\n・販売数：5,000セット\n・専用台紙付き\n・有効時間：使用開始から24時間"
+  },
+  {
+    name: "東京メトロ東西線 ラッピング車両「ソニック・ザ・ヘッジホッグ号」",
+    url: "https://www.4gamer.net/games/842/G084212/20260930033/",
+    sub: "https://www.sega.jp/topics/detail/260930_3/",
+    period: "2026年10月5日（月）～11月4日（水）予定",
+    start: "2026-10-05", end: "2026-11-04",
+    place: "東京メトロ東西線（15000系1編成）",
+    area: "東京", cats: ["交通", "グッズ"],
+    summary: "歴代のソニック6種類を車両側面にデザインしたラッピング車両を、東京メトロ東西線で運行。",
+    detail: "・15000系1編成で運行\n・車両側面に6種類の歴代ソニックをデザイン\n・運行時刻・区間は日によって異なる\n・「ソニック・ザ・ヘッジホッグ号」の鉄道模型をグリーンマックスから発売予定（時期・価格は未発表）"
+  },
+  {
+    name: "地下鉄博物館 × ソニック35周年 タイアップ企画",
+    url: "https://www.chikahaku.jp/event/2026/20261006-1129_metro-sonic.html",
+    sub: "https://www.sega.jp/topics/detail/260930_3/",
+    period: "2026年10月6日（火）～11月29日（日）",
+    start: "2026-10-06", end: "2026-11-29",
+    place: "地下鉄博物館（東京都江戸川区・葛西駅高架下）",
+    maps: [{ q: "地下鉄博物館 東京都江戸川区東葛西6-3-1" }],
+    area: "東京", cats: ["展示"],
+    summary: "ソニック35周年を記念し、館内限定ARフォトフレーム、展示、関連動画の放映などを実施。",
+    detail: "・館内限定ARフォトフレーム\n・キャラクターパネル、ポスター展示\n・上映前の関連動画放映\n・関連企画：デジタルスタンプラリーの対象スポット、記念24時間券の販売"
+  },
+  {
+    name: "下北沢カレーフェスティバル2026 × ソニック・ぷよぷよ",
+    url: "https://prtimes.jp/main/html/rd/p/000000014.000119791.html",
+    sub: "https://shimokitazawa-curryfes.com/",
+    period: "2026年10月8日（木）～10月25日（日）",
+    start: "2026-10-08", end: "2026-10-25",
+    place: "下北沢駅周辺の参加店舗、下北沢リンク・パークほか",
+    maps: [{ label: "下北沢駅周辺", q: "下北沢駅" }, { label: "下北沢リンク・パーク", q: "下北沢リンク・パーク" }],
+    area: "東京", cats: ["フード", "スタンプラリー"],
+    summary: "下北沢の135店舗が参加するフードイベント。「ぷよぷよ」「ソニック」とコラボし、限定メニューやスタンプラリー景品を展開。",
+    detail: "・飲食・買い物でスタンプを集め、数に応じて景品と交換\n・25スタンプ：イベント限定Tシャツ\n・ソニック×ぷよぷよ限定コラボメニュー"
+  },
+  {
+    name: "ソニック35周年記念 東京メトロデジタルスタンプラリー",
+    url: "https://sonic.sega.jp/SonicChannel/topics/event/20260930_009393/",
+    sub: "https://www.sega.jp/topics/detail/260930_3/",
+    period: "2026年10月9日（金）～11月1日（日）",
+    start: "2026-10-09", end: "2026-11-01",
+    place: "池袋PARCO、SEGA STORE TOKYO、地下鉄博物館、クア・アイナ 東京スカイツリータウン・ソラマチ店",
+    maps: [{ label: "池袋PARCO", q: "池袋PARCO 本館" }, { label: "SEGA STORE TOKYO", q: "SEGA STORE TOKYO" }, { label: "地下鉄博物館", q: "地下鉄博物館 東京都江戸川区東葛西6-3-1" }, { label: "クア・アイナ ソラマチ店", q: "クア・アイナ 東京スカイツリータウン・ソラマチ店" }],
+    area: "東京", cats: ["スタンプラリー"],
+    summary: "東京メトロmy!アプリを使って4スポットを巡るデジタルスタンプラリー。達成特典や抽選特典を用意。",
+    detail: "・参加方法：東京メトロmy!アプリで4スポットを巡回\n・全4スポット達成：オリジナルペーパークラフト（先着3,000名）\n・抽選：記念ステンレスボトル（10名）\n・達成特典：Metokoreデジタルバッジ"
+  },
+  {
+    name: "SONIC the Exhibition -ACROSS GENERATIONS-",
+    url: "https://art.parco.jp/parcomuseum/detail/?id=2018",
+    sub: "https://www.sega.jp/topics/detail/260929_1/",
+    period: "2026年10月9日（金）～11月1日（日）",
+    start: "2026-10-09", end: "2026-11-01",
+    place: "池袋PARCO 本館7F PARCO FACTORY（東京都豊島区）",
+    maps: [{ q: "池袋PARCO 本館 東京都豊島区南池袋1-28-2" }],
+    area: "東京", cats: ["展示", "グッズ"],
+    summary: "歴代ゲームや台本、設定・開発資料を通して、ソニックシリーズの歩みを振り返る35周年展。一部資料は本展で初公開。",
+    detail: "・有料入場特典：オリジナルステッカー（ランダム1枚／なくなり次第終了）\n・PARCOメンバーズ会員特典：別デザインのビジュアルステッカー\n・公式Instagram／Xキャンペーン：星野一幸氏サイン入りB1ポスター（抽選5名、11月1日23:59締切）\n・グッズ販売：オリジナルグッズ・一部SEGA公式グッズ（トレーディング缶バッチ、Tシャツ、クリアファイル、キービジュアルアクリルブロック、クリエイターコラボ アクリルキーホルダー／アクリルブロックなど）\n・有田焼「Infinite Blue」（YOYOYO™）：会場先行販売・先着5体\n※グッズの販売方法・詳細は後日発表"
+  },
+  {
+    name: "ソニック・ザ・ヘッジホッグ × 仙台・秋保温泉 コラボ企画",
+    url: "https://travel.willer.co.jp/campaign/sonic/",
+    sub: "https://www.sega.jp/topics/detail/260915_2/",
+    period: "2026年10月14日（水）～12月28日（月）",
+    start: "2026-10-14", end: "2026-12-28",
+    place: "宮城県仙台市・秋保温泉地区の対象施設",
+    maps: [{ q: "秋保温泉 宮城県仙台市太白区" }],
+    area: "宮城", cats: ["体験", "グッズ"],
+    summary: "秋保温泉地区を巡る周遊企画。限定カード、体験企画、フード・ドリンク、描き下ろしグッズなどを展開。",
+    detail: "・条件達成：限定トレーディングカード（全5種／先着）\n・体験企画：ソニックこけし絵付け、万華鏡作り\n・周遊企画：等身大パネル6種、温泉マナーポスター\n・限定フード、ドリンク\n・描き下ろしグッズ販売：秋保ヴィレッジ（数量限定）\n※体験企画は施設により実施日・予約要否が異なる"
+  },
+  {
+    name: "SONIC CUP 2026（15歳以下スケートボード大会）",
+    url: "https://www.sega.jp/topics/detail/260914_2/",
+    sub: "https://www.murasaki.co.jp/news/2353/",
+    period: "西日本SNS予選：2026年9月29日（火）～10月12日（月・祝）\n東京決勝：2026年12月13日（日）",
+    start: "2026-09-29", end: "2026-12-13",
+    place: "予選：Instagram\n決勝：ムラサキパーク立川立飛（東京都立川市）",
+    maps: [{ q: "ムラサキパーク立川立飛" }],
+    area: "東京", cats: ["スポーツ"],
+    summary: "15歳以下を対象とするスケートボード大会。全国6地区のSNS予選通過者48名が東京決勝に出場。",
+    detail: "・決勝出場：全国6地区のSNS予選通過者48名\n・プロライダーによるデモライド：12月13日（日）16:30予定\n・決勝上位3名とSONIC賞受賞者：ロサンゼルス研修ツアー"
+  }
+];
+
+const WEEK = ["日", "月", "火", "水", "木", "金", "土"];
+const toDate = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const FILTERS = [
+  { id: "all", label: "すべて", test: () => true },
+  { id: "greet", label: "グリーティング", test: ev => !!ev.greeting, cls: "greet-chip" },
+  { id: "東京", label: "東京", test: ev => ev.area === "東京" },
+  { id: "大阪", label: "大阪", test: ev => ev.area === "大阪" },
+  { id: "宮城", label: "宮城", test: ev => ev.area === "宮城" },
+  { id: "全国", label: "全国", test: ev => ev.area === "全国" },
+  { id: "オンライン", label: "オンライン", test: ev => ev.area === "オンライン" },
+  { id: "展示", label: "展示", test: ev => ev.cats.includes("展示") },
+  { id: "グッズ", label: "グッズ", test: ev => ev.cats.includes("グッズ") },
+];
+
+let current = "all";
+try { const saved = localStorage.getItem("sonic-filter"); if (FILTERS.some(f => f.id === saved)) current = saved; } catch (e) {}
+
+const ICON_PIN = '<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+const ICON_MAP = '<svg viewBox="0 0 24 24"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4zM9 4v14M15 6v14"/></svg>';
+const ICON_CAL = '<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>';
+
+function renderDetail(text) {
+  const lines = text.split("\n");
+  const items = lines.filter(l => l.startsWith("・")).map(l => `<li>${esc(l.slice(1))}</li>`).join("");
+  const notes = lines.filter(l => l.startsWith("※")).map(l => `<p class="note">${esc(l)}</p>`).join("");
+  return (items ? `<ul>${items}</ul>` : "") + notes;
+}
+
+function mapLinks(ev) {
+  if (!ev.maps) return "";
+  return '<span class="maps">' + ev.maps.map(m =>
+    `<a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(m.q)}" target="_blank" rel="noopener">${ICON_MAP}${esc(m.label || "Googleマップで見る")}</a>`
+  ).join("") + "</span>";
+}
+
+function card(ev) {
+  const s = toDate(ev.start);
+  const dateBox = `
+    <div class="date" aria-hidden="true">
+      <span class="m">${s.getMonth() + 1}月</span>
+      <span class="d">${s.getDate()}</span>
+      <span class="w">${WEEK[s.getDay()]}</span>
+      <span class="from">${ev.end || ev.endLabel ? "〜" : ""}</span>
+    </div>`;
+  const tags = [ev.area, ...ev.cats].map(t => `<span class="tag">#${esc(t)}</span>`).join("");
+  return `
+  <article class="card${ev.greeting ? " is-greet" : ""}">
+    <div class="card-main">
+      ${dateBox}
+      <div>
+        ${ev.greeting ? '<div class="badges"><span class="badge tag-greet">グリーティング</span></div>' : ""}
+        <h2 class="title"><a href="${esc(ev.url)}" target="_blank" rel="noopener">${esc(ev.name.slice(0, -1))}<span class="nw">${esc(ev.name.slice(-1))}<svg class="ext" viewBox="0 0 24 24" aria-label="公式サイトを開く"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span></a></h2>
+        <div class="meta">
+          <div>${ICON_CAL}<span>${esc(ev.period).replace(/\n/g, "<br>")}</span></div>
+          <div>${ICON_PIN}<span>${esc(ev.place).replace(/\n/g, "<br>")}${mapLinks(ev)}</span></div>
+        </div>
+        ${ev.greeting ? `<div class="greet-note">グリーティング：${esc(ev.greeting)}</div>` : ""}
+        <div class="tags">${tags}</div>
+      </div>
+    </div>
+    <details>
+      <summary>詳細を見る</summary>
+      <div class="detail">
+        <h3>概要</h3>
+        <p>${esc(ev.summary)}</p>
+        <h3>主な内容・特典</h3>
+        ${renderDetail(ev.detail)}
+        ${ev.sub ? `<div class="links"><a class="btn sub" href="${esc(ev.sub)}" target="_blank" rel="noopener">関連情報を見る</a></div>` : ""}
+      </div>
+    </details>
+  </article>`;
+}
+
+function render() {
+  const f = FILTERS.find(x => x.id === current);
+  const list = EVENTS
+    .filter(f.test)
+    .sort((a, b) => toDate(a.start) - toDate(b.start));
+
+  document.getElementById("chips").innerHTML = FILTERS.map(x => {
+    const n = EVENTS.filter(x.test).length;
+    return `<button class="chip ${x.cls || ""}" data-id="${esc(x.id)}" aria-pressed="${x.id === current}">${esc(x.label)} ${n}</button>`;
+  }).join("");
+
+  document.getElementById("result").textContent = `${f.label}：${list.length}件`;
+
+  const out = document.getElementById("list");
+  if (!list.length) { out.innerHTML = '<p class="empty">該当するイベントはありません</p>'; return; }
+
+  // 開始月ごとに見出しを付ける
+  let html = "", lastGroup = "";
+  list.forEach(ev => {
+    const s = toDate(ev.start);
+    const group = `${s.getFullYear()}年${s.getMonth() + 1}月スタート`;
+    if (group !== lastGroup) { html += `<h2 class="month">${group}</h2>`; lastGroup = group; }
+    html += card(ev);
+  });
+  out.innerHTML = html;
+}
+
+document.getElementById("chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip");
+  if (!b) return;
+  current = b.dataset.id;
+  try { localStorage.setItem("sonic-filter", current); } catch (err) {}
+  render();
+});
+
+
+render();
+</script>
+</body>
+</html>
