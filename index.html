@@ -344,6 +344,126 @@
     padding: 0 0 40px;
     text-align: center;
   }
+
+  /* 表示切り替え */
+  .view-toggle {
+    display: inline-flex;
+    background: var(--surface-2);
+    border-radius: 999px;
+    padding: 3px;
+    margin-bottom: 8px;
+  }
+  .view-toggle button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--text-sub);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    min-height: 32px;
+  }
+  .view-toggle button[aria-pressed="true"] {
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .15);
+  }
+
+  /* カレンダー */
+  .cal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px 6px 10px;
+    box-shadow: var(--shadow);
+  }
+  .cal-head { display: flex; align-items: center; justify-content: space-between; padding: 0 6px 10px; }
+  .cal-title { font-size: 17px; font-weight: 900; }
+  .cal-nav {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    font: inherit; font-size: 15px;
+    cursor: pointer;
+  }
+  .cal-nav:disabled { opacity: .3; cursor: default; }
+  .cal-dow, .cal-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .cal-dow { text-align: center; font-size: 11px; font-weight: 700; color: var(--text-sub); padding-bottom: 4px; }
+  .cal-week { row-gap: 2px; border-top: 1px solid var(--border); padding: 2px 0 4px; }
+  .cal-day {
+    grid-row: 1;
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    min-height: 42px;
+    padding: 3px 0 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .cal-day .n { font-size: 12px; font-weight: 700; width: 22px; height: 22px; line-height: 22px; border-radius: 50%; }
+  .cal-day.other { opacity: .4; }
+  .cal-day.today .n { background: var(--text); color: var(--bg); }
+  .cal-day.sel { background: var(--accent-soft); }
+  .dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px; min-height: 6px; padding: 0 2px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+  .cal-bar {
+    appearance: none;
+    border: 0;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 20px;
+    height: 20px;
+    padding: 0 5px;
+    margin: 0 2px;
+    border-radius: 5px;
+    background: var(--c);
+    color: var(--ct);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    min-width: 0;
+  }
+  .cal-bar.cl { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 0; }
+  .cal-bar.cr { border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0; }
+  .cal-mark {
+    appearance: none;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 17px;
+    height: 20px;
+    padding: 0;
+    margin: 0 2px;
+    border: 1.5px solid var(--c);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    cursor: pointer;
+    min-width: 0;
+  }
+  .cal-mark.sel { outline: 2px solid var(--text); outline-offset: 1px; }
+  .cal-bar.sel { outline: 2px solid var(--text); outline-offset: 1px; }
+  .cal-note { font-size: 11px; color: var(--text-sub); padding: 8px 6px 0; line-height: 1.6; }
+  .lg-solid, .lg-open { display: inline-block; width: 22px; height: 10px; border-radius: 3px; vertical-align: -1px; margin-right: 4px; }
+  .lg-solid { background: var(--c-event); }
+  .lg-open { border: 1.5px solid var(--c-event); border-radius: 999px; background: var(--surface); }
+  .cal-panel { scroll-margin-top: 150px; }
 </style>
 </head>
 <body>
@@ -357,6 +477,10 @@
 
 <div class="filters">
   <div class="wrap">
+    <div class="view-toggle" id="viewToggle" role="group" aria-label="表示切り替え">
+      <button type="button" data-view="list">リスト</button>
+      <button type="button" data-view="cal">カレンダー</button>
+    </div>
     <div class="chips" id="chips" role="toolbar" aria-label="絞り込み"></div>
     <div class="result" id="result" aria-live="polite"></div>
   </div>
@@ -385,7 +509,7 @@ const EVENTS = [
     name: "しまむらパーク「ソニック＆シャドウ」トレーナー・雑貨販売",
     url: "https://sonic.sega.jp/SonicChannel/topics/goods/20260930_009403/",
     period: "2026年9月30日（水）15:00～（なくなり次第終了）",
-    start: "2026-09-30", end: null, endLabel: "なくなり次第終了",
+    start: "2026-09-30", end: null, endLabel: "なくなり次第終了", startLabel: "販売",
     place: "しまむらパーク（オンラインストア）",
     tags: ["グッズ"],
     summary: "ソニック＆シャドウをデザインしたトレーナーと雑貨を、しまむらのオンラインストアで販売。",
@@ -408,7 +532,8 @@ const EVENTS = [
     url: "https://www.sega.jp/segastore/osaka/",
     sub: "https://www.sega.co.jp/release/260914_1.html",
     period: "2026年10月2日（金）オープン（常設）",
-    start: "2026-10-02", end: null, endLabel: "常設",
+    start: "2026-10-02", end: null, endLabel: "常設", startLabel: "開店",
+    marks: [{ date: "2026-10-03", label: "来場" }],
     place: "心斎橋PARCO 6F（大阪市中央区）",
     maps: [{ q: "心斎橋PARCO 大阪市中央区心斎橋筋1-8-3" }],
     tags: ["グリーティング", "ショップ", "グッズ"],
@@ -420,7 +545,8 @@ const EVENTS = [
     name: "サンロッカーズ渋谷 × ソニック 応援アンバサダー企画",
     url: "https://www.sunrockers.jp/news/detail/id=23124",
     period: "2026-27シーズン（ソニック来場：10月3日・4日）",
-    start: "2026-10-03", end: null, endLabel: "シーズン中",
+    start: "2026-10-03", end: null, endLabel: "シーズン中", startLabel: "来場",
+    marks: [{ date: "2026-10-04", label: "来場" }],
     place: "TOYOTA ARENA TOKYOほか、ホームゲーム会場・SNS",
     maps: [{ q: "TOYOTA ARENA TOKYO 東京都江東区青海" }],
     tags: ["グリーティング", "イベント", "グッズ"],
@@ -525,7 +651,7 @@ const EVENTS = [
     name: "SONIC & FRIENDS×Sanrio characters ひょこぴょこ ぬいぐるみ Vol.1",
     url: "https://segaplaza.jp/prize/B122677/",
     period: "2026年9月11日（金）より順次登場（登場時期未定）",
-    start: "2026-09-11", end: null,
+    start: "2026-09-11", end: null, startLabel: "登場",
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
     tags: ["プライズ"],
     summary: "セガオリジナルデザイン「ひょこぴょこ」から、『SONIC & FRIENDS』と『Sanrio characters』のコラボぬいぐるみが登場。首を傾げたポーズで顔をのぞかせる。",
@@ -535,7 +661,7 @@ const EVENTS = [
     name: "SONIC & FRIENDS×Sanrio characters ひょこぴょこ ぬいぐるみ Vol.2",
     url: "https://segaplaza.jp/prize/B122678/",
     period: "2026年9月11日（金）より順次登場（登場時期未定）",
-    start: "2026-09-11", end: null,
+    start: "2026-09-11", end: null, startLabel: "登場",
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
     tags: ["プライズ"],
     summary: "セガオリジナルデザイン「ひょこぴょこ」から、『SONIC & FRIENDS』と『Sanrio characters』のコラボぬいぐるみが登場。首を傾げたポーズで顔をのぞかせる。",
@@ -545,7 +671,7 @@ const EVENTS = [
     name: "SONIC & FRIENDS×Sanrio characters 寝そべり ミニぬいぐるみ Vol.1",
     url: "https://segaplaza.jp/prize/B122715/",
     period: "2026年10月23日（金）より順次登場（登場時期未定）",
-    start: "2026-10-23", end: null,
+    start: "2026-10-23", end: null, startLabel: "登場",
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
     tags: ["プライズ"],
     summary: "『SONIC & FRIENDS』と『Sanrio characters』のコラボ寝そべりミニぬいぐるみ。",
@@ -555,7 +681,7 @@ const EVENTS = [
     name: "SONIC & FRIENDS×Sanrio characters 寝そべり ミニぬいぐるみ Vol.2",
     url: "https://segaplaza.jp/prize/B122716/",
     period: "2026年10月23日（金）より順次登場（登場時期未定）",
-    start: "2026-10-23", end: null,
+    start: "2026-10-23", end: null, startLabel: "登場",
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
     tags: ["プライズ"],
     summary: "『SONIC & FRIENDS』と『Sanrio characters』のコラボ寝そべりミニぬいぐるみ。",
@@ -565,7 +691,7 @@ const EVENTS = [
     name: "SONIC & FRIENDS プチフェイスマスコット",
     url: "https://segaplaza.jp/prize/K121201/",
     period: "2026年11月20日（金）より順次登場（登場時期未定）",
-    start: "2026-11-20", end: null,
+    start: "2026-11-20", end: null, startLabel: "登場",
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
     tags: ["プライズ"],
     summary: "『SONIC & FRIENDS』のプチフェイスマスコットが登場。",
@@ -649,6 +775,113 @@ function card(ev) {
   </article>`;
 }
 
+// ---------- カレンダー ----------
+let view = "list";
+try { const v = localStorage.getItem("sonic-view"); if (v === "cal" || v === "list") view = v; } catch (e) {}
+
+const pad = n => String(n).padStart(2, "0");
+const dkey = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const evEnd = ev => toDate(ev.end || ev.start);
+const isRange = ev => !!ev.end && ev.end !== ev.start;
+const isOpen = ev => !ev.end;                 // 終了日が未定・不明
+// 終了日未定イベントは、開始日と関連日（marks）にだけラベルを出す
+const openDates = ev => {
+  const m = new Map([[ev.start, [ev.startLabel || "開始"]]]);
+  (ev.marks || []).forEach(x => m.set(x.date, [...(m.get(x.date) || []), x.label]));
+  return m;
+};
+const primaryCls = ev => { const t = TAGS.find(t => ev.tags.includes(t.id)); return t ? t.cls : "t-event"; };
+const dayDiff = (a, b) => Math.round((a - b) / 86400000);
+const ymIndex = d => d.getFullYear() * 12 + d.getMonth();
+
+const MIN_YM = Math.min(...EVENTS.map(e => ymIndex(toDate(e.start))));
+const MAX_YM = Math.max(...EVENTS.map(e => ymIndex(evEnd(e))));
+const NOW = new Date();
+let calYM = Math.min(Math.max(ymIndex(NOW), MIN_YM), MAX_YM);
+let sel = (ymIndex(NOW) >= MIN_YM && ymIndex(NOW) <= MAX_YM) ? { day: dkey(NOW) } : null;
+
+function calendarHTML(list) {
+  const y = Math.floor(calYM / 12), m = calYM % 12;
+  const first = new Date(y, m, 1), last = new Date(y, m + 1, 0);
+  const gridStart = new Date(y, m, 1 - first.getDay());
+  const weeks = Math.ceil((first.getDay() + last.getDate()) / 7);
+  const todayK = dkey(NOW);
+  const selEv = sel && sel.ev != null ? EVENTS[sel.ev] : null;
+
+  let html = `<section class="cal" aria-label="イベントカレンダー">
+    <div class="cal-head">
+      <button class="cal-nav" data-nav="-1" aria-label="前の月" ${calYM <= MIN_YM ? "disabled" : ""}>◀</button>
+      <div class="cal-title">${y}年${m + 1}月</div>
+      <button class="cal-nav" data-nav="1" aria-label="次の月" ${calYM >= MAX_YM ? "disabled" : ""}>▶</button>
+    </div>
+    <div class="cal-dow">${WEEK.map(w => `<div>${w}</div>`).join("")}</div>`;
+
+  for (let w = 0; w < weeks; w++) {
+    const ws = new Date(gridStart); ws.setDate(ws.getDate() + w * 7);
+    const we = new Date(ws); we.setDate(we.getDate() + 6);
+
+    const wsK = dkey(ws), weK = dkey(we);
+    const items = [];
+    list.forEach(ev => {
+      if (isRange(ev)) {
+        if (toDate(ev.start) <= we && evEnd(ev) >= ws)
+          items.push({ ev, kind: "bar", a: Math.max(0, dayDiff(toDate(ev.start), ws)), b: Math.min(6, dayDiff(evEnd(ev), ws)) });
+      } else if (isOpen(ev)) {
+        openDates(ev).forEach((labels, k) => {
+          if (k < wsK || k > weK) return;
+          const c = dayDiff(toDate(k), ws);
+          items.push({ ev, kind: "mark", label: labels.join("・"), a: c, b: c });   // 開催日の1マスに収める
+        });
+      }
+    });
+    items.sort((x, y) => (x.kind === "mark") - (y.kind === "mark") || toDate(x.ev.start) - toDate(y.ev.start) || (y.b - y.a) - (x.b - x.a) || x.a - y.a);
+    const laneEnd = [];
+    const bars = items.map(it => {
+      const { ev, a, b } = it;
+      let lane = laneEnd.findIndex(e => e < a);
+      if (lane < 0) { lane = laneEnd.length; laneEnd.push(b); } else laneEnd[lane] = b;
+      const on = selEv === ev ? " sel" : "";
+      const pos = `grid-column:${a + 1} / ${b + 2};grid-row:${lane + 2}`;
+      if (it.kind === "mark") {
+        const t = `${it.label}：${ev.name}`;
+        return `<button class="cal-mark ${primaryCls(ev)}${on}" data-ev="${EVENTS.indexOf(ev)}" style="${pos}" title="${esc(t + "（終了日未定）")}" aria-label="${esc(t + "（終了日未定）")}">${esc(it.label)}</button>`;
+      }
+      const cl = toDate(ev.start) < ws ? " cl" : "";
+      const cr = evEnd(ev) > we ? " cr" : "";
+      return `<button class="cal-bar ${primaryCls(ev)}${cl}${cr}${on}" data-ev="${EVENTS.indexOf(ev)}" style="${pos}" title="${esc(ev.name)}">${esc(ev.name)}</button>`;
+    }).join("");
+
+    let days = "";
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(ws); d.setDate(d.getDate() + i);
+      const k = dkey(d);
+      const dots = list.filter(ev => !isRange(ev) && !isOpen(ev) && ev.start === k)
+        .map(ev => `<i class="dot ${primaryCls(ev)}"></i>`).join("");
+      const cls = ["cal-day"];
+      if (d.getMonth() !== m) cls.push("other");
+      if (k === todayK) cls.push("today");
+      if (sel && sel.day === k) cls.push("sel");
+      days += `<button class="${cls.join(" ")}" data-day="${k}" style="grid-column:${i + 1}" aria-label="${d.getMonth() + 1}月${d.getDate()}日"><span class="n">${d.getDate()}</span><span class="dots">${dots}</span></button>`;
+    }
+    html += `<div class="cal-week">${days}${bars}</div>`;
+  }
+  html += `<div class="cal-note"><span class="lg-solid"></span>開催期間　<span class="lg-open"></span>終了日未定のイベント（開始日・関連日のみ、その日のマス内に表示）<br>日付や帯・ラベルをタップすると詳細を表示します。</div></section>`;
+
+  // 選択中の詳細
+  html += `<div class="cal-panel" id="calPanel">`;
+  if (selEv && list.includes(selEv)) {
+    html += `<h2 class="month">選択したイベント</h2>${card(selEv)}`;
+  } else if (sel && sel.day) {
+    const d = toDate(sel.day);
+    const items = list.filter(ev => isOpen(ev) ? openDates(ev).has(sel.day) : toDate(ev.start) <= d && d <= evEnd(ev));
+    html += `<h2 class="month">${d.getMonth() + 1}月${d.getDate()}日（${WEEK[d.getDay()]}）のイベント ${items.length}件</h2>`;
+    html += items.length ? items.map(card).join("") : '<p class="empty">この日に開催のイベントはありません</p>';
+  } else {
+    html += '<p class="empty">日付や帯をタップすると詳細が表示されます</p>';
+  }
+  return html + `</div>`;
+}
+
 function render() {
   const f = FILTERS.find(x => x.id === current);
   const list = EVENTS
@@ -662,7 +895,10 @@ function render() {
 
   document.getElementById("result").textContent = `${f.label}：${list.length}件`;
 
+  document.querySelectorAll("#viewToggle button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === view)));
+
   const out = document.getElementById("list");
+  if (view === "cal") { out.innerHTML = calendarHTML(list); return; }
   if (!list.length) { out.innerHTML = '<p class="empty">該当するイベントはありません</p>'; return; }
 
   // 開始月ごとに見出しを付ける
@@ -684,6 +920,31 @@ document.getElementById("chips").addEventListener("click", e => {
   render();
 });
 
+document.getElementById("viewToggle").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  view = b.dataset.view;
+  try { localStorage.setItem("sonic-view", view); } catch (err) {}
+  render();
+});
+
+document.getElementById("list").addEventListener("click", e => {
+  if (view !== "cal") return;
+  const nav = e.target.closest(".cal-nav");
+  const bar = e.target.closest(".cal-bar, .cal-mark");
+  const day = e.target.closest(".cal-day");
+  if (nav) {
+    calYM = Math.min(Math.max(calYM + Number(nav.dataset.nav), MIN_YM), MAX_YM);
+    render();
+    return;
+  }
+  if (bar) sel = { ev: Number(bar.dataset.ev) };
+  else if (day) sel = { day: day.dataset.day };
+  else return;
+  render();
+  const panel = document.getElementById("calPanel");
+  if (panel) panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
 
 render();
 </script>
