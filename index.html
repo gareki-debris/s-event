@@ -22,6 +22,9 @@
     --hero: #096cb8;
     --greet: #d6336c;
     --greet-soft: #fde7ef;
+    --prize: #178a47;
+    --prize-soft: #e0f4e8;
+    --prize-text: #ffffff;
     --shadow: 0 1px 2px rgba(20, 30, 60, .06), 0 4px 16px rgba(20, 30, 60, .06);
   }
   @media (prefers-color-scheme: dark) {
@@ -38,7 +41,10 @@
       --hero: #0a4f86;
       --greet: #ff7aa8;
       --greet-soft: #3a1b29;
-                  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
+      --prize: #4fd18b;
+      --prize-soft: #11301f;
+      --prize-text: #08210f;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
     }
   }
   :root[data-theme="dark"] {
@@ -54,6 +60,9 @@
     --hero: #0a4f86;
     --greet: #ff7aa8;
     --greet-soft: #3a1b29;
+    --prize: #4fd18b;
+    --prize-soft: #11301f;
+    --prize-text: #08210f;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
   }
 
@@ -142,6 +151,8 @@
   }
   .chip.greet-chip { color: var(--greet); border-color: var(--greet); }
   .chip.greet-chip[aria-pressed="true"] { background: var(--greet); color: #fff; }
+  .chip.prize-chip { color: var(--prize); border-color: var(--prize); }
+  .chip.prize-chip[aria-pressed="true"] { background: var(--prize); color: var(--prize-text); }
   .result {
     font-size: 12px;
     color: var(--text-sub);
@@ -172,6 +183,7 @@
     border: 1px solid transparent;
   }
   .card.is-greet { border-color: color-mix(in srgb, var(--greet) 35%, transparent); }
+  .card.is-prize { border-color: color-mix(in srgb, var(--prize) 40%, transparent); }
   .card-main {
     display: grid;
     grid-template-columns: 62px 1fr;
@@ -191,6 +203,7 @@
   .date .w { display: block; font-size: 11px; font-weight: 700; }
   .date .from { display: block; font-size: 10px; margin-top: 2px; opacity: .8; }
   .card.is-greet .date { background: var(--greet-soft); color: var(--greet); }
+  .card.is-prize .date { background: var(--prize-soft); color: var(--prize); }
 
   .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
   .badge {
@@ -204,6 +217,7 @@
     line-height: 1.6;
   }
   .tag-greet { background: var(--greet); color: #fff; }
+  .tag-prize { background: var(--prize); color: var(--prize-text); }
 
   .title {
     margin: 0 0 8px;
@@ -329,6 +343,11 @@
     padding: 0 0 40px;
     text-align: center;
   }
+  /* プライズ（緑） */
+  .card.is-prize .title a { color: var(--prize); text-decoration-color: color-mix(in srgb, var(--prize) 45%, transparent); }
+  .card.is-prize .title .ext { stroke: var(--prize); }
+  .card.is-prize summary { color: var(--prize); }
+  .card.is-prize .map-link { color: var(--prize); background: var(--prize-soft); }
 </style>
 </head>
 <body>
@@ -337,7 +356,7 @@
   <div class="wrap">
     <span class="hero-label">2026年下半期</span>
     <h1>ソニック関連<br>イベント一覧</h1>
-    <p>コラボ・展示・グッズ・グリーティング情報をまとめました</p>
+    <p>コラボ・展示・グッズ・プライズ・グリーティング情報をまとめました</p>
   </div>
 </header>
 
@@ -506,6 +525,56 @@ const EVENTS = [
     area: "東京", cats: ["スポーツ"],
     summary: "15歳以下を対象とするスケートボード大会。全国6地区のSNS予選通過者48名が東京決勝に出場。",
     detail: "・決勝出場：全国6地区のSNS予選通過者48名\n・プロライダーによるデモライド：12月13日（日）16:30予定\n・決勝上位3名とSONIC賞受賞者：ロサンゼルス研修ツアー"
+  },
+  {
+    name: "SONIC & FRIENDS×Sanrio characters ひょこぴょこ ぬいぐるみ Vol.1",
+    url: "https://segaplaza.jp/prize/B122677/",
+    period: "2026年9月11日（金）より順次登場（登場時期未定）",
+    start: "2026-09-11", end: null,
+    place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
+    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    summary: "セガオリジナルデザイン「ひょこぴょこ」から、『SONIC & FRIENDS』と『Sanrio characters』のコラボぬいぐるみが登場。首を傾げたポーズで顔をのぞかせる。",
+    detail: "・種類：全3種\n・サイズ：全長約12×11×16cm\n※登場時期は未定。2026年9月11日より順次登場"
+  },
+  {
+    name: "SONIC & FRIENDS×Sanrio characters ひょこぴょこ ぬいぐるみ Vol.2",
+    url: "https://segaplaza.jp/prize/B122678/",
+    period: "2026年9月11日（金）より順次登場（登場時期未定）",
+    start: "2026-09-11", end: null,
+    place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
+    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    summary: "セガオリジナルデザイン「ひょこぴょこ」から、『SONIC & FRIENDS』と『Sanrio characters』のコラボぬいぐるみが登場。首を傾げたポーズで顔をのぞかせる。",
+    detail: "・種類：全3種\n・サイズ：全長約12×11×16cm\n※登場時期は未定。2026年9月11日より順次登場"
+  },
+  {
+    name: "SONIC & FRIENDS×Sanrio characters 寝そべり ミニぬいぐるみ Vol.1",
+    url: "https://segaplaza.jp/prize/B122715/",
+    period: "2026年10月23日（金）より順次登場（登場時期未定）",
+    start: "2026-10-23", end: null,
+    place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
+    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    summary: "『SONIC & FRIENDS』と『Sanrio characters』のコラボ寝そべりミニぬいぐるみ。",
+    detail: "・種類：全3種\n・サイズ：全長約10×16×12cm\n※登場時期は未定。2026年10月23日より順次登場"
+  },
+  {
+    name: "SONIC & FRIENDS×Sanrio characters 寝そべり ミニぬいぐるみ Vol.2",
+    url: "https://segaplaza.jp/prize/B122716/",
+    period: "2026年10月23日（金）より順次登場（登場時期未定）",
+    start: "2026-10-23", end: null,
+    place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
+    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    summary: "『SONIC & FRIENDS』と『Sanrio characters』のコラボ寝そべりミニぬいぐるみ。",
+    detail: "・種類：全3種\n・サイズ：全長約10×16×12cm\n※登場時期は未定。2026年10月23日より順次登場"
+  },
+  {
+    name: "SONIC & FRIENDS プチフェイスマスコット",
+    url: "https://segaplaza.jp/prize/K121201/",
+    period: "2026年11月20日（金）より順次登場（登場時期未定）",
+    start: "2026-11-20", end: null,
+    place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
+    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    summary: "『SONIC & FRIENDS』のプチフェイスマスコットが登場。",
+    detail: "・種類：全5種\n・サイズ：全長約5×3×6cm\n※登場時期は未定。2026年11月20日より順次登場"
   }
 ];
 
@@ -516,6 +585,7 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;"
 const FILTERS = [
   { id: "all", label: "すべて", test: () => true },
   { id: "greet", label: "グリーティング", test: ev => !!ev.greeting, cls: "greet-chip" },
+  { id: "prize", label: "プライズ", test: ev => !!ev.prize, cls: "prize-chip" },
   { id: "東京", label: "東京", test: ev => ev.area === "東京" },
   { id: "大阪", label: "大阪", test: ev => ev.area === "大阪" },
   { id: "宮城", label: "宮城", test: ev => ev.area === "宮城" },
@@ -557,11 +627,11 @@ function card(ev) {
     </div>`;
   const tags = [ev.area, ...ev.cats].map(t => `<span class="tag">#${esc(t)}</span>`).join("");
   return `
-  <article class="card${ev.greeting ? " is-greet" : ""}">
+  <article class="card${ev.greeting ? " is-greet" : ""}${ev.prize ? " is-prize" : ""}">
     <div class="card-main">
       ${dateBox}
       <div>
-        ${ev.greeting ? '<div class="badges"><span class="badge tag-greet">グリーティング</span></div>' : ""}
+        ${(ev.greeting || ev.prize) ? `<div class="badges">${ev.greeting ? '<span class="badge tag-greet">グリーティング</span>' : ""}${ev.prize ? '<span class="badge tag-prize">プライズ</span>' : ""}</div>` : ""}
         <h2 class="title"><a href="${esc(ev.url)}" target="_blank" rel="noopener">${esc(ev.name.slice(0, -1))}<span class="nw">${esc(ev.name.slice(-1))}<svg class="ext" viewBox="0 0 24 24" aria-label="公式サイトを開く"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span></a></h2>
         <div class="meta">
           <div>${ICON_CAL}<span>${esc(ev.period).replace(/\n/g, "<br>")}</span></div>
