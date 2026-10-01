@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ソニック関連イベント一覧</title>
-<meta name="description" content="2026年下半期のソニック関連イベント・コラボ企画をまとめた一覧です。">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -20,11 +22,11 @@
     --accent-soft: #e3eef8;
     --accent-text: #ffffff;
     --hero: #096cb8;
-    --greet: #d6336c;
-    --greet-soft: #fde7ef;
-    --prize: #178a47;
-    --prize-soft: #e0f4e8;
-    --prize-text: #ffffff;
+    --c-event: #096cb8;  --c-event-t: #ffffff;
+    --c-greet: #7b3fc4;  --c-greet-t: #ffffff;
+    --c-prize: #178a47;  --c-prize-t: #ffffff;
+    --c-goods: #1b1b1f;  --c-goods-t: #ffffff;
+    --c-shop:  #f2b600;  --c-shop-t:  #2a2100;
     --shadow: 0 1px 2px rgba(20, 30, 60, .06), 0 4px 16px rgba(20, 30, 60, .06);
   }
   @media (prefers-color-scheme: dark) {
@@ -39,11 +41,11 @@
       --accent-soft: #14283a;
       --accent-text: #0e121a;
       --hero: #0a4f86;
-      --greet: #ff7aa8;
-      --greet-soft: #3a1b29;
-      --prize: #4fd18b;
-      --prize-soft: #11301f;
-      --prize-text: #08210f;
+      --c-event: #5fa9e3;  --c-event-t: #0e121a;
+      --c-greet: #b79cf0;  --c-greet-t: #1a1030;
+      --c-prize: #4fd18b;  --c-prize-t: #08210f;
+      --c-goods: #eef1f7;  --c-goods-t: #0e121a;
+      --c-shop:  #f5c518;  --c-shop-t:  #2a2100;
       --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
     }
   }
@@ -58,11 +60,11 @@
     --accent-soft: #14283a;
     --accent-text: #0e121a;
     --hero: #0a4f86;
-    --greet: #ff7aa8;
-    --greet-soft: #3a1b29;
-    --prize: #4fd18b;
-    --prize-soft: #11301f;
-    --prize-text: #08210f;
+    --c-event: #5fa9e3;  --c-event-t: #0e121a;
+    --c-greet: #b79cf0;  --c-greet-t: #1a1030;
+    --c-prize: #4fd18b;  --c-prize-t: #08210f;
+    --c-goods: #eef1f7;  --c-goods-t: #0e121a;
+    --c-shop:  #f5c518;  --c-shop-t:  #2a2100;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
   }
 
@@ -149,10 +151,14 @@
     border-color: var(--accent);
     color: var(--accent-text);
   }
-  .chip.greet-chip { color: var(--greet); border-color: var(--greet); }
-  .chip.greet-chip[aria-pressed="true"] { background: var(--greet); color: #fff; }
-  .chip.prize-chip { color: var(--prize); border-color: var(--prize); }
-  .chip.prize-chip[aria-pressed="true"] { background: var(--prize); color: var(--prize-text); }
+  .chip.all[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+  .t-event { --c: var(--c-event); --ct: var(--c-event-t); }
+  .t-greet { --c: var(--c-greet); --ct: var(--c-greet-t); }
+  .t-prize { --c: var(--c-prize); --ct: var(--c-prize-t); }
+  .t-goods { --c: var(--c-goods); --ct: var(--c-goods-t); }
+  .t-shop  { --c: var(--c-shop);  --ct: var(--c-shop-t); }
+  .chip[class*="t-"] { border: 2px solid var(--c); padding: 6px 13px; }
+  .chip[class*="t-"][aria-pressed="true"] { background: var(--c); border-color: var(--c); color: var(--ct); }
   .result {
     font-size: 12px;
     color: var(--text-sub);
@@ -182,8 +188,6 @@
     overflow: hidden;
     border: 1px solid transparent;
   }
-  .card.is-greet { border-color: color-mix(in srgb, var(--greet) 35%, transparent); }
-  .card.is-prize { border-color: color-mix(in srgb, var(--prize) 40%, transparent); }
   .card-main {
     display: grid;
     grid-template-columns: 62px 1fr;
@@ -202,8 +206,6 @@
   .date .d { display: block; font-size: 24px; font-weight: 900; line-height: 1.1; }
   .date .w { display: block; font-size: 11px; font-weight: 700; }
   .date .from { display: block; font-size: 10px; margin-top: 2px; opacity: .8; }
-  .card.is-greet .date { background: var(--greet-soft); color: var(--greet); }
-  .card.is-prize .date { background: var(--prize-soft); color: var(--prize); }
 
   .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
   .badge {
@@ -216,8 +218,6 @@
     padding: 2px 8px;
     line-height: 1.6;
   }
-  .tag-greet { background: var(--greet); color: #fff; }
-  .tag-prize { background: var(--prize); color: var(--prize-text); }
 
   .title {
     margin: 0 0 8px;
@@ -268,18 +268,19 @@
     margin-top: 10px;
     font-size: 13px;
     font-weight: 700;
-    color: var(--greet);
-    background: var(--greet-soft);
+    color: var(--text);
+    background: var(--surface-2);
     border-radius: 10px;
     padding: 8px 10px;
   }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
   .tag {
     font-size: 11px;
-    color: var(--text-sub);
-    background: var(--surface-2);
+    font-weight: 700;
+    color: var(--ct);
+    background: var(--c);
     border-radius: 999px;
-    padding: 2px 9px;
+    padding: 2px 10px;
   }
 
   details { border-top: 1px solid var(--border); }
@@ -343,11 +344,6 @@
     padding: 0 0 40px;
     text-align: center;
   }
-  /* プライズ（緑） */
-  .card.is-prize .title a { color: var(--prize); text-decoration-color: color-mix(in srgb, var(--prize) 45%, transparent); }
-  .card.is-prize .title .ext { stroke: var(--prize); }
-  .card.is-prize summary { color: var(--prize); }
-  .card.is-prize .map-link { color: var(--prize); background: var(--prize-soft); }
 </style>
 </head>
 <body>
@@ -355,8 +351,7 @@
 <header class="hero">
   <div class="wrap">
     <span class="hero-label">2026年下半期</span>
-    <h1>ソニック関連<br>イベント一覧</h1>
-    <p>コラボ・展示・グッズ・プライズ・グリーティング情報をまとめました</p>
+    <h1>ソニック関連イベント一覧</h1>
   </div>
 </header>
 
@@ -382,7 +377,7 @@ const EVENTS = [
     period: "2026年7月10日（金）～10月12日（月・祝）",
     start: "2026-07-10", end: "2026-10-12",
     place: "全国のROUND1対象店舗（企画により対象店舗が異なる）",
-    area: "全国", cats: ["フード", "ノベルティ"],
+    tags: ["イベント", "グッズ"],
     summary: "全国のROUND1対象店舗で、コラボメニューや限定ノベルティ、クレーンゲーム景品、ボウリング演出などを展開。町田店ではコラボルームも実施。",
     detail: "・コラボメニュー注文：期間別限定ノベルティ\n・コラボパック利用：B4ビジュアルマット\n・対象クレーンゲームに500円投入：A5クリアファイル\n・ボウリング2ゲームで条件達成：A5クリアファイル\n・町田店限定：コラボルーム\n・その他：ボウリング演出、Rism限定フレーム、公式Xキャンペーン"
   },
@@ -392,7 +387,7 @@ const EVENTS = [
     period: "2026年9月30日（水）15:00～（なくなり次第終了）",
     start: "2026-09-30", end: null, endLabel: "なくなり次第終了",
     place: "しまむらパーク（オンラインストア）",
-    area: "オンライン", cats: ["グッズ"],
+    tags: ["グッズ"],
     summary: "ソニック＆シャドウをデザインしたトレーナーと雑貨を、しまむらのオンラインストアで販売。",
     detail: "・トレーナー：1,990円（税抜）／M～4L\n・ショルダーバッグ：1,990円（税抜）\n・キーホルダー：990円（税抜）\n・コインケース：990円（税抜）\n※なくなり次第終了"
   },
@@ -404,7 +399,7 @@ const EVENTS = [
     start: "2026-10-02", end: "2026-10-12",
     place: "渋谷モディ 2F イベントスペース（東京都渋谷区）",
     maps: [{ q: "渋谷モディ 東京都渋谷区神南1-21-3" }],
-    area: "東京", cats: ["ポップアップ", "グッズ"],
+    tags: ["ショップ", "グッズ"],
     summary: "『SONIC & FRIENDS』3周年と「カナヘイの小動物」のコラボPOP UP STORE。記念イラストを使用した商品や購入特典を展開。",
     detail: "・記念イラストを使用したコラボ商品\n・SEGA STORE TOKYOとの連動購入特典\n・配布条件、絵柄、限定商品の詳細は後日発表"
   },
@@ -416,7 +411,7 @@ const EVENTS = [
     start: "2026-10-02", end: null, endLabel: "常設",
     place: "心斎橋PARCO 6F（大阪市中央区）",
     maps: [{ q: "心斎橋PARCO 大阪市中央区心斎橋筋1-8-3" }],
-    area: "大阪", cats: ["ショップ", "グッズ"],
+    tags: ["グリーティング", "ショップ", "グッズ"],
     greeting: "10月2日（金）・3日（土）",
     summary: "セガ／アトラスのキャラクターグッズを扱う公式ストアが大阪にオープン。ソニックの限定商品や購入特典も用意。",
     detail: "・ソニックグリーティング：10月2日（金）、3日（土）\n・3,300円以上購入：キラキラステッカー\n・5,500円以上購入：オリジナルショッパー\n・限定グッズ：ソニック・ザ・ヘッジホッグ × 河村康輔 SEGA STORE限定トイ（モノクロ）3,960円（税込）\n・限定グッズ：SEGA STORE OSAKA 限定ショッピングバッグ 1,100円（税込）\n・BE@RBRICK SUPER SONIC CHROME Ver. 100% & 400%：25,080円（税込）\n※購入特典はなくなり次第終了"
@@ -428,7 +423,7 @@ const EVENTS = [
     start: "2026-10-03", end: null, endLabel: "シーズン中",
     place: "TOYOTA ARENA TOKYOほか、ホームゲーム会場・SNS",
     maps: [{ q: "TOYOTA ARENA TOKYO 東京都江東区青海" }],
-    area: "東京", cats: ["スポーツ", "グッズ"],
+    tags: ["グリーティング", "イベント", "グッズ"],
     greeting: "10月3日（土）・4日（日）ソニック来場（時間・参加方法は未発表）",
     summary: "ソニックがサンロッカーズ渋谷の応援アンバサダーに就任。会場演出、コラボグッズ、SNS企画などをシーズンを通して展開。",
     detail: "・ソニック来場：10月3日（土）、4日（日）の秋田戦\n・アリーナビジョン演出\n・コラボグッズ、SNS企画\n※グリーティング時間・参加方法は未発表"
@@ -439,7 +434,7 @@ const EVENTS = [
     period: "2026年10月5日（月）～11月30日（月）（なくなり次第終了）",
     start: "2026-10-05", end: "2026-11-30",
     place: "東京メトロ旅客案内所、一部アニメイト、地下鉄博物館、原宿ツーリストインフォメーションセンター、オンライン",
-    area: "東京", cats: ["交通", "グッズ"],
+    tags: ["グッズ"],
     summary: "ソニック35周年限定デザインの東京メトロ24時間券を、専用台紙付きで5,000セット販売。",
     detail: "・価格：700円（大人用）\n・販売数：5,000セット\n・専用台紙付き\n・有効時間：使用開始から24時間"
   },
@@ -450,7 +445,7 @@ const EVENTS = [
     period: "2026年10月5日（月）～11月4日（水）予定",
     start: "2026-10-05", end: "2026-11-04",
     place: "東京メトロ東西線（15000系1編成）",
-    area: "東京", cats: ["交通", "グッズ"],
+    tags: ["イベント", "グッズ"],
     summary: "歴代のソニック6種類を車両側面にデザインしたラッピング車両を、東京メトロ東西線で運行。",
     detail: "・15000系1編成で運行\n・車両側面に6種類の歴代ソニックをデザイン\n・運行時刻・区間は日によって異なる\n・「ソニック・ザ・ヘッジホッグ号」の鉄道模型をグリーンマックスから発売予定（時期・価格は未発表）"
   },
@@ -462,7 +457,7 @@ const EVENTS = [
     start: "2026-10-06", end: "2026-11-29",
     place: "地下鉄博物館（東京都江戸川区・葛西駅高架下）",
     maps: [{ q: "地下鉄博物館 東京都江戸川区東葛西6-3-1" }],
-    area: "東京", cats: ["展示"],
+    tags: ["イベント"],
     summary: "ソニック35周年を記念し、館内限定ARフォトフレーム、展示、関連動画の放映などを実施。",
     detail: "・館内限定ARフォトフレーム\n・キャラクターパネル、ポスター展示\n・上映前の関連動画放映\n・関連企画：デジタルスタンプラリーの対象スポット、記念24時間券の販売"
   },
@@ -474,7 +469,7 @@ const EVENTS = [
     start: "2026-10-08", end: "2026-10-25",
     place: "下北沢駅周辺の参加店舗、下北沢リンク・パークほか",
     maps: [{ label: "下北沢駅周辺", q: "下北沢駅" }, { label: "下北沢リンク・パーク", q: "下北沢リンク・パーク" }],
-    area: "東京", cats: ["フード", "スタンプラリー"],
+    tags: ["イベント"],
     summary: "下北沢の135店舗が参加するフードイベント。「ぷよぷよ」「ソニック」とコラボし、限定メニューやスタンプラリー景品を展開。",
     detail: "・飲食・買い物でスタンプを集め、数に応じて景品と交換\n・25スタンプ：イベント限定Tシャツ\n・ソニック×ぷよぷよ限定コラボメニュー"
   },
@@ -486,7 +481,7 @@ const EVENTS = [
     start: "2026-10-09", end: "2026-11-01",
     place: "池袋PARCO、SEGA STORE TOKYO、地下鉄博物館、クア・アイナ 東京スカイツリータウン・ソラマチ店",
     maps: [{ label: "池袋PARCO", q: "池袋PARCO 本館" }, { label: "SEGA STORE TOKYO", q: "SEGA STORE TOKYO" }, { label: "地下鉄博物館", q: "地下鉄博物館 東京都江戸川区東葛西6-3-1" }, { label: "クア・アイナ ソラマチ店", q: "クア・アイナ 東京スカイツリータウン・ソラマチ店" }],
-    area: "東京", cats: ["スタンプラリー"],
+    tags: ["イベント"],
     summary: "東京メトロmy!アプリを使って4スポットを巡るデジタルスタンプラリー。達成特典や抽選特典を用意。",
     detail: "・参加方法：東京メトロmy!アプリで4スポットを巡回\n・全4スポット達成：オリジナルペーパークラフト（先着3,000名）\n・抽選：記念ステンレスボトル（10名）\n・達成特典：Metokoreデジタルバッジ"
   },
@@ -498,7 +493,7 @@ const EVENTS = [
     start: "2026-10-09", end: "2026-11-01",
     place: "池袋PARCO 本館7F PARCO FACTORY（東京都豊島区）",
     maps: [{ q: "池袋PARCO 本館 東京都豊島区南池袋1-28-2" }],
-    area: "東京", cats: ["展示", "グッズ"],
+    tags: ["イベント", "グッズ"],
     summary: "歴代ゲームや台本、設定・開発資料を通して、ソニックシリーズの歩みを振り返る35周年展。一部資料は本展で初公開。",
     detail: "・有料入場特典：オリジナルステッカー（ランダム1枚／なくなり次第終了）\n・PARCOメンバーズ会員特典：別デザインのビジュアルステッカー\n・公式Instagram／Xキャンペーン：星野一幸氏サイン入りB1ポスター（抽選5名、11月1日23:59締切）\n・グッズ販売：オリジナルグッズ・一部SEGA公式グッズ（トレーディング缶バッチ、Tシャツ、クリアファイル、キービジュアルアクリルブロック、クリエイターコラボ アクリルキーホルダー／アクリルブロックなど）\n・有田焼「Infinite Blue」（YOYOYO™）：会場先行販売・先着5体\n※グッズの販売方法・詳細は後日発表"
   },
@@ -510,7 +505,7 @@ const EVENTS = [
     start: "2026-10-14", end: "2026-12-28",
     place: "宮城県仙台市・秋保温泉地区の対象施設",
     maps: [{ q: "秋保温泉 宮城県仙台市太白区" }],
-    area: "宮城", cats: ["体験", "グッズ"],
+    tags: ["イベント", "グッズ"],
     summary: "秋保温泉地区を巡る周遊企画。限定カード、体験企画、フード・ドリンク、描き下ろしグッズなどを展開。",
     detail: "・条件達成：限定トレーディングカード（全5種／先着）\n・体験企画：ソニックこけし絵付け、万華鏡作り\n・周遊企画：等身大パネル6種、温泉マナーポスター\n・限定フード、ドリンク\n・描き下ろしグッズ販売：秋保ヴィレッジ（数量限定）\n※体験企画は施設により実施日・予約要否が異なる"
   },
@@ -522,7 +517,7 @@ const EVENTS = [
     start: "2026-09-29", end: "2026-12-13",
     place: "予選：Instagram\n決勝：ムラサキパーク立川立飛（東京都立川市）",
     maps: [{ q: "ムラサキパーク立川立飛" }],
-    area: "東京", cats: ["スポーツ"],
+    tags: ["イベント"],
     summary: "15歳以下を対象とするスケートボード大会。全国6地区のSNS予選通過者48名が東京決勝に出場。",
     detail: "・決勝出場：全国6地区のSNS予選通過者48名\n・プロライダーによるデモライド：12月13日（日）16:30予定\n・決勝上位3名とSONIC賞受賞者：ロサンゼルス研修ツアー"
   },
@@ -532,7 +527,7 @@ const EVENTS = [
     period: "2026年9月11日（金）より順次登場（登場時期未定）",
     start: "2026-09-11", end: null,
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
-    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    tags: ["プライズ"],
     summary: "セガオリジナルデザイン「ひょこぴょこ」から、『SONIC & FRIENDS』と『Sanrio characters』のコラボぬいぐるみが登場。首を傾げたポーズで顔をのぞかせる。",
     detail: "・種類：全3種\n・サイズ：全長約12×11×16cm\n※登場時期は未定。2026年9月11日より順次登場"
   },
@@ -542,7 +537,7 @@ const EVENTS = [
     period: "2026年9月11日（金）より順次登場（登場時期未定）",
     start: "2026-09-11", end: null,
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
-    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    tags: ["プライズ"],
     summary: "セガオリジナルデザイン「ひょこぴょこ」から、『SONIC & FRIENDS』と『Sanrio characters』のコラボぬいぐるみが登場。首を傾げたポーズで顔をのぞかせる。",
     detail: "・種類：全3種\n・サイズ：全長約12×11×16cm\n※登場時期は未定。2026年9月11日より順次登場"
   },
@@ -552,7 +547,7 @@ const EVENTS = [
     period: "2026年10月23日（金）より順次登場（登場時期未定）",
     start: "2026-10-23", end: null,
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
-    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    tags: ["プライズ"],
     summary: "『SONIC & FRIENDS』と『Sanrio characters』のコラボ寝そべりミニぬいぐるみ。",
     detail: "・種類：全3種\n・サイズ：全長約10×16×12cm\n※登場時期は未定。2026年10月23日より順次登場"
   },
@@ -562,7 +557,7 @@ const EVENTS = [
     period: "2026年10月23日（金）より順次登場（登場時期未定）",
     start: "2026-10-23", end: null,
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
-    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    tags: ["プライズ"],
     summary: "『SONIC & FRIENDS』と『Sanrio characters』のコラボ寝そべりミニぬいぐるみ。",
     detail: "・種類：全3種\n・サイズ：全長約10×16×12cm\n※登場時期は未定。2026年10月23日より順次登場"
   },
@@ -572,7 +567,7 @@ const EVENTS = [
     period: "2026年11月20日（金）より順次登場（登場時期未定）",
     start: "2026-11-20", end: null,
     place: "プライズ取扱店舗（取扱店舗・入荷時期は店舗により異なる）",
-    area: "全国", cats: ["プライズ", "グッズ"], prize: true,
+    tags: ["プライズ"],
     summary: "『SONIC & FRIENDS』のプチフェイスマスコットが登場。",
     detail: "・種類：全5種\n・サイズ：全長約5×3×6cm\n※登場時期は未定。2026年11月20日より順次登場"
   }
@@ -582,17 +577,18 @@ const WEEK = ["日", "月", "火", "水", "木", "金", "土"];
 const toDate = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+const TAGS = [
+  { id: "イベント", cls: "t-event" },
+  { id: "ショップ", cls: "t-shop" },
+  { id: "グッズ", cls: "t-goods" },
+  { id: "プライズ", cls: "t-prize" },
+  { id: "グリーティング", cls: "t-greet" },
+];
+const TAGCLS = Object.fromEntries(TAGS.map(t => [t.id, t.cls]));
+
 const FILTERS = [
-  { id: "all", label: "すべて", test: () => true },
-  { id: "greet", label: "グリーティング", test: ev => !!ev.greeting, cls: "greet-chip" },
-  { id: "prize", label: "プライズ", test: ev => !!ev.prize, cls: "prize-chip" },
-  { id: "東京", label: "東京", test: ev => ev.area === "東京" },
-  { id: "大阪", label: "大阪", test: ev => ev.area === "大阪" },
-  { id: "宮城", label: "宮城", test: ev => ev.area === "宮城" },
-  { id: "全国", label: "全国", test: ev => ev.area === "全国" },
-  { id: "オンライン", label: "オンライン", test: ev => ev.area === "オンライン" },
-  { id: "展示", label: "展示", test: ev => ev.cats.includes("展示") },
-  { id: "グッズ", label: "グッズ", test: ev => ev.cats.includes("グッズ") },
+  { id: "all", label: "すべて", test: () => true, cls: "all" },
+  ...TAGS.map(t => ({ id: t.id, label: t.id, test: ev => ev.tags.includes(t.id), cls: t.cls })),
 ];
 
 let current = "all";
@@ -625,20 +621,19 @@ function card(ev) {
       <span class="w">${WEEK[s.getDay()]}</span>
       <span class="from">${ev.end || ev.endLabel ? "〜" : ""}</span>
     </div>`;
-  const tags = [ev.area, ...ev.cats].map(t => `<span class="tag">#${esc(t)}</span>`).join("");
+  const tags = [...ev.tags].sort((a, b) => TAGS.findIndex(t => t.id === a) - TAGS.findIndex(t => t.id === b)).map(t => `<span class="tag ${TAGCLS[t] || ""}">${esc(t)}</span>`).join("");
   return `
-  <article class="card${ev.greeting ? " is-greet" : ""}${ev.prize ? " is-prize" : ""}">
+  <article class="card">
     <div class="card-main">
       ${dateBox}
       <div>
-        ${(ev.greeting || ev.prize) ? `<div class="badges">${ev.greeting ? '<span class="badge tag-greet">グリーティング</span>' : ""}${ev.prize ? '<span class="badge tag-prize">プライズ</span>' : ""}</div>` : ""}
+        <div class="tags">${tags}</div>
         <h2 class="title"><a href="${esc(ev.url)}" target="_blank" rel="noopener">${esc(ev.name.slice(0, -1))}<span class="nw">${esc(ev.name.slice(-1))}<svg class="ext" viewBox="0 0 24 24" aria-label="公式サイトを開く"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></span></a></h2>
         <div class="meta">
           <div>${ICON_CAL}<span>${esc(ev.period).replace(/\n/g, "<br>")}</span></div>
           <div>${ICON_PIN}<span>${esc(ev.place).replace(/\n/g, "<br>")}${mapLinks(ev)}</span></div>
         </div>
         ${ev.greeting ? `<div class="greet-note">グリーティング：${esc(ev.greeting)}</div>` : ""}
-        <div class="tags">${tags}</div>
       </div>
     </div>
     <details>
