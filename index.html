@@ -463,6 +463,14 @@
   .lg-solid, .lg-open { display: inline-block; width: 22px; height: 10px; border-radius: 3px; vertical-align: -1px; margin-right: 4px; }
   .lg-solid { background: var(--c-event); }
   .lg-open { border: 1.5px solid var(--c-event); border-radius: 999px; background: var(--surface); }
+  .cal-approx { margin: 8px 4px 0; padding-top: 8px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+  .cal-approx-ttl { font-size: 11px; font-weight: 700; color: var(--text-sub); }
+  .cal-approx-btn {
+    appearance: none; font: inherit; font-size: 12px; font-weight: 700; text-align: left;
+    border: 1.5px solid var(--c); border-radius: 10px; background: var(--surface); color: var(--text);
+    padding: 6px 10px; cursor: pointer; line-height: 1.4;
+  }
+  .cal-approx-btn.sel { outline: 2px solid var(--text); outline-offset: 1px; }
   .cal-panel { scroll-margin-top: 150px; }
 </style>
 </head>
@@ -696,6 +704,17 @@ const EVENTS = [
     tags: ["プライズ"],
     summary: "『SONIC & FRIENDS』のプチフェイスマスコットが登場。",
     detail: "・種類：全5種\n・サイズ：全長約5×3×6cm\n※登場時期は未定。2026年11月20日より順次登場"
+  },
+  {
+    name: "SONIC THE HEDGEHOG クリア栞 & 35周年記念 近縁屋 七味唐辛子",
+    url: "https://sonic.sega.jp/SonicChannel/topics/goods/20260928_009401/",
+    sub: "https://store.kadokawa.co.jp/shop/ebtensega/e/eebten-b00118/",
+    period: "2026年10月下旬頃発売予定（具体的な発売日は未発表）",
+    start: "2026-10-21", end: null, approx: "下旬",
+    place: "カドスト：セガストア オンライン／ユアテイスト公式オンラインショップ（オンライン販売）",
+    tags: ["グッズ"],
+    summary: "ソニック・ザ・ヘッジホッグに登場するキャラクターのクリア栞と、35周年記念の近縁屋 七味唐辛子が登場。クリア栞は文庫本サイズで、しおりとしてもアクスタのように飾っても使える。",
+    detail: "・クリア栞：各800円（税抜）／W100×H148mm／全20種（19キャラクター＋35周年ティザー）\n・七味唐辛子：各2,000円（税抜）／全8種／内容量5g\n・七味の味：ソニック＝チリペッパー、テイルス＝ミント、ナックルズ＝韮（ニラ）、エミー＝ハイビスカス、エッグマン＝スパイスペッパー、シャドウ＝珈琲（コーヒー）、ルージュ＝ドクダミ、シルバー＝七味唐辛子\n・七味のセット内容：七味缶・七味唐辛子・ロゴ入りパッケージ・グリーンヒルゾーン両面台紙\n・取扱先：カドスト：セガストア オンライン／ユアテイスト公式オンラインショップ\n・発売元：ユアテイスト株式会社\n※発売日は2026年10月下旬頃。具体的な日付は未発表"
   }
 ];
 
@@ -743,8 +762,8 @@ function card(ev) {
   const dateBox = `
     <div class="date" aria-hidden="true">
       <span class="m">${s.getMonth() + 1}月</span>
-      <span class="d">${s.getDate()}</span>
-      <span class="w">${WEEK[s.getDay()]}</span>
+      <span class="d">${ev.approx ? esc(ev.approx) : s.getDate()}</span>
+      <span class="w">${ev.approx ? "頃" : WEEK[s.getDay()]}</span>
       <span class="from">${ev.end || ev.endLabel ? "〜" : ""}</span>
     </div>`;
   const tags = [...ev.tags].sort((a, b) => TAGS.findIndex(t => t.id === a) - TAGS.findIndex(t => t.id === b)).map(t => `<span class="tag ${TAGCLS[t] || ""}">${esc(t)}</span>`).join("");
@@ -786,6 +805,7 @@ const isRange = ev => !!ev.end && ev.end !== ev.start;
 const isOpen = ev => !ev.end;                 // 終了日が未定・不明
 // 終了日未定イベントは、開始日と関連日（marks）にだけラベルを出す
 const openDates = ev => {
+  if (ev.approx) return new Map();          // 日付未定（「10月下旬頃」など）は日付ラベルを出さない
   const m = new Map([[ev.start, [ev.startLabel || "開始"]]]);
   (ev.marks || []).forEach(x => m.set(x.date, [...(m.get(x.date) || []), x.label]));
   return m;
@@ -865,6 +885,11 @@ function calendarHTML(list) {
     }
     html += `<div class="cal-week">${days}${bars}</div>`;
   }
+  const approx = list.filter(ev => ev.approx && ymIndex(toDate(ev.start)) === calYM);
+  if (approx.length) {
+    html += `<div class="cal-approx"><div class="cal-approx-ttl">日付未定（時期のみ発表）</div>` + approx.map(ev =>
+      `<button class="cal-approx-btn ${primaryCls(ev)}${selEv === ev ? " sel" : ""}" data-ev="${EVENTS.indexOf(ev)}">${toDate(ev.start).getMonth() + 1}月${esc(ev.approx)}頃：${esc(ev.name)}</button>`).join("") + `</div>`;
+  }
   html += `<div class="cal-note"><span class="lg-solid"></span>開催期間　<span class="lg-open"></span>終了日未定のイベント（開始日・関連日のみ、その日のマス内に表示）<br>日付や帯・ラベルをタップすると詳細を表示します。</div></section>`;
 
   // 選択中の詳細
@@ -931,7 +956,7 @@ document.getElementById("viewToggle").addEventListener("click", e => {
 document.getElementById("list").addEventListener("click", e => {
   if (view !== "cal") return;
   const nav = e.target.closest(".cal-nav");
-  const bar = e.target.closest(".cal-bar, .cal-mark");
+  const bar = e.target.closest(".cal-bar, .cal-mark, .cal-approx-btn");
   const day = e.target.closest(".cal-day");
   if (nav) {
     calYM = Math.min(Math.max(calYM + Number(nav.dataset.nav), MIN_YM), MAX_YM);
