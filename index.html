@@ -2,6 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#096cb8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ソニック関連イベント一覧</title>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
@@ -27,6 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
+    color-scheme: light;
     --bg: #f1f1f1;
     --surface: #ffffff;
     --surface-2: #ececee;
@@ -43,44 +46,6 @@
     --c-goods: #1b1b1f;  --c-goods-t: #ffffff;
     --c-shop:  #f2b600;  --c-shop-t:  #2a2100;
     --shadow: 0 1px 2px rgba(20, 30, 60, .06), 0 4px 16px rgba(20, 30, 60, .06);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0e121a;
-      --surface: #171c27;
-      --surface-2: #202737;
-      --text: #eef1f7;
-      --text-sub: #9aa4b8;
-      --border: #2a3244;
-      --accent: #5fa9e3;
-      --accent-soft: #14283a;
-      --accent-text: #0e121a;
-      --hero: #0a4f86;
-      --c-event: #5fa9e3;  --c-event-t: #0e121a;
-      --c-greet: #b79cf0;  --c-greet-t: #1a1030;
-      --c-prize: #4fd18b;  --c-prize-t: #08210f;
-      --c-goods: #eef1f7;  --c-goods-t: #0e121a;
-      --c-shop:  #f5c518;  --c-shop-t:  #2a2100;
-      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0e121a;
-    --surface: #171c27;
-    --surface-2: #202737;
-    --text: #eef1f7;
-    --text-sub: #9aa4b8;
-    --border: #2a3244;
-    --accent: #5fa9e3;
-    --accent-soft: #14283a;
-    --accent-text: #0e121a;
-    --hero: #0a4f86;
-    --c-event: #5fa9e3;  --c-event-t: #0e121a;
-    --c-greet: #b79cf0;  --c-greet-t: #1a1030;
-    --c-prize: #4fd18b;  --c-prize-t: #08210f;
-    --c-goods: #eef1f7;  --c-goods-t: #0e121a;
-    --c-shop:  #f5c518;  --c-shop-t:  #2a2100;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
   }
 
   * { box-sizing: border-box; }
@@ -642,9 +607,11 @@ const EVENTS = [
     start: "2026-10-09", end: "2026-11-01",
     place: "池袋PARCO 本館7F PARCO FACTORY（東京都豊島区）",
     maps: [{ q: "池袋PARCO 本館 東京都豊島区南池袋1-28-2" }],
-    tags: ["イベント", "グッズ"],
+    marks: [{ date: "2026-10-17", label: "来場" }, { date: "2026-10-18", label: "来場" }, { date: "2026-10-24", label: "来場" }, { date: "2026-10-25", label: "来場" }],
+    tags: ["イベント", "グッズ", "グリーティング"],
+    greeting: "10月17日（土）・18日（日）・24日（土）・25日（日）",
     summary: "歴代ゲームや台本、設定・開発資料を通して、ソニックシリーズの歩みを振り返る35周年展。一部資料は本展で初公開。",
-    detail: "・有料入場特典：オリジナルステッカー（ランダム1枚／なくなり次第終了）\n・PARCOメンバーズ会員特典：別デザインのビジュアルステッカー\n・公式Instagram／Xキャンペーン：星野一幸氏サイン入りB1ポスター（抽選5名、11月1日23:59締切）\n・グッズ販売：オリジナルグッズ・一部SEGA公式グッズ（トレーディング缶バッチ、Tシャツ、クリアファイル、キービジュアルアクリルブロック、クリエイターコラボ アクリルキーホルダー／アクリルブロックなど）\n・有田焼「Infinite Blue」（YOYOYO™）：会場先行販売・先着5体\n※グッズの販売方法・詳細は後日発表"
+    detail: "・ソニックスペシャルグリーティング：10月17日（土）、18日（日）、24日（土）、25日（日）※詳細は後日案内\n・有料入場特典：オリジナルステッカー（ランダム1枚／なくなり次第終了）\n・PARCOメンバーズ会員特典：別デザインのビジュアルステッカー\n・公式Instagram／Xキャンペーン：星野一幸氏サイン入りB1ポスター（抽選5名、11月1日23:59締切）\n・グッズ販売：オリジナルグッズ・一部SEGA公式グッズ（トレーディング缶バッチ、Tシャツ、クリアファイル、キービジュアルアクリルブロック、クリエイターコラボ アクリルキーホルダー／アクリルブロックなど）\n・有田焼「Infinite Blue」（YOYOYO™）：会場先行販売・先着5体\n※グッズの販売方法・詳細は後日発表"
   },
   {
     name: "ソニック・ザ・ヘッジホッグ × 仙台・秋保温泉 コラボ企画",
@@ -873,6 +840,11 @@ function calendarHTML(list) {
       if (isRange(ev)) {
         if (toDate(ev.start) <= we && evEnd(ev) >= ws)
           items.push({ ev, kind: "bar", a: Math.max(0, dayDiff(toDate(ev.start), ws)), b: Math.min(6, dayDiff(evEnd(ev), ws)) });
+        (ev.marks || []).forEach(x => {
+          if (x.date < wsK || x.date > weK) return;
+          const c = dayDiff(toDate(x.date), ws);
+          items.push({ ev, kind: "mark", label: x.label, a: c, b: c });
+        });
       } else if (isOpen(ev)) {
         openDates(ev).forEach((labels, k) => {
           if (k < wsK || k > weK) return;
@@ -891,7 +863,7 @@ function calendarHTML(list) {
       const pos = `grid-column:${a + 1} / ${b + 2};grid-row:${lane + 2}`;
       if (it.kind === "mark") {
         const t = `${it.label}：${ev.name}`;
-        return `<button class="cal-mark ${primaryCls(ev)}${on}" data-ev="${EVENTS.indexOf(ev)}" style="${pos}" title="${esc(t + "（終了日未定）")}" aria-label="${esc(t + "（終了日未定）")}">${esc(it.label)}</button>`;
+        return `<button class="cal-mark ${primaryCls(ev)}${on}" data-ev="${EVENTS.indexOf(ev)}" style="${pos}" title="${esc(t + (isOpen(ev) ? "（終了日未定）" : ""))}" aria-label="${esc(t + (isOpen(ev) ? "（終了日未定）" : ""))}">${esc(it.label)}</button>`;
       }
       const cl = toDate(ev.start) < ws ? " cl" : "";
       const cr = evEnd(ev) > we ? " cr" : "";
